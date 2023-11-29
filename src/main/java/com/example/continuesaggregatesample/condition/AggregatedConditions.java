@@ -1,15 +1,27 @@
 package com.example.continuesaggregatesample.condition;
 
-import lombok.Value;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
 import java.util.List;
 
-@Value
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class AggregatedConditions {
 
-    private Timestamp bucket;
+    @Id
+    private Long id;
+
+    private Long bucket;
+
     private String device;
+    @ElementCollection
     private List<String> relatedLocations;
     private Double averageTemperature;
     private Double averageHumidity;

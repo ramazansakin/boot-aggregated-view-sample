@@ -13,7 +13,7 @@ public class AggregatedConditionsService {
     private final AggregatedConditionsRepository aggregatedConditionsRepository;
 
     public List<AggregatedConditions> getAggregatedConditions(Timestamp bucket, String device) {
-        return aggregatedConditionsRepository.findByBucketAndDevice(bucket, device);
+        return aggregatedConditionsRepository.findByBucketAndDevice(bucket.getTime(), device);
     }
 
 }

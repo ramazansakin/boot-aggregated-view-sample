@@ -1,20 +1,26 @@
 package com.example.continuesaggregatesample.condition;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.sql.Timestamp;
+import lombok.NoArgsConstructor;
 
 
 @Entity
 @Table(name = "conditions")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@IdClass(CompositeId.class)
 public class Conditions {
 
     @Id
-    private Timestamp time;
+    @Column(name = "serialid", columnDefinition = "bigserial")
+    private Long serialid;
+
+    @Id
+    private Long time;
+
     private String location;
     private String device;
     private Double temperature;

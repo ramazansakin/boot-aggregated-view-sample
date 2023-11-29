@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -20,6 +19,7 @@ public class RandomConditionGenerator {
     private final List<String> devices = Arrays.asList("deviceA", "deviceB", "deviceC", "deviceD");
     private final List<String> locations = Arrays.asList("Angara", "İstanbul", "Afyon", "Malatya", "Aydın", "Mugla");
 
+    private static Long idSequence = 1L;
 
     @Scheduled(fixedRate = 60000) // Run every minute
     public void generateDummyData() {
@@ -28,7 +28,8 @@ public class RandomConditionGenerator {
         // Generate random data for each device
         for (String device : devices) {
             Conditions condition = new Conditions();
-            condition.setTime(new Timestamp(System.currentTimeMillis()));
+            condition.setSerialid(idSequence++);
+            condition.setTime(System.currentTimeMillis());
             condition.setLocation(selectRandomLocation()); // Set your location here
             condition.setDevice(device);
             condition.setTemperature(generateRandomDouble());
