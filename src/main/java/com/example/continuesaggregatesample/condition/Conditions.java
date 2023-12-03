@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 
 @Entity
 @Table(name = "conditions")
@@ -19,10 +21,14 @@ public class Conditions {
     private Long serialid;
 
     @Id
-    private Long time;
+    private Timestamp time;
 
+    @Column(columnDefinition = "text")
     private String location;
+
+    @Column(columnDefinition = "text")
     private String device;
+
     private Double temperature;
     private Double humidity;
     private Integer testone;

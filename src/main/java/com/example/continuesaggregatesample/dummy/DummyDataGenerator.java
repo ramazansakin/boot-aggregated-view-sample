@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.util.Random;
 
 
@@ -16,25 +17,23 @@ public class DummyDataGenerator {
 
     //    @Scheduled(fixedRate = 60000)
     public void generateDummyData() {
-
         log.info("###### Random Dummy Data Generator is RUNNING! ######");
 
-        String[] cids = {"12:12:12:12", "23:23:23:23", "34:34:34:34", "45:45:45:45", "56:56:56:56"};
-        for (String cid : cids) {
-            long timestamp = System.currentTimeMillis();
+        String[] teams = {"teamX", "teamY", "teamZ"};
+        for (String team : teams) {
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             int testone = new Random().nextInt(0, 100);
             long testtwo = new Random().nextInt(10000);
             double testthree = new Random().nextDouble() * 100;
 
             Dummy dummy = new Dummy();
             dummy.setTimestamp(timestamp);
-            dummy.setCid(cid);
+            dummy.setTeam(team);
             dummy.setTestone(testone);
             dummy.setTesttwo(testtwo);
             dummy.setTestthree(testthree);
 
             dummyRepository.save(dummy);
-
         }
     }
 

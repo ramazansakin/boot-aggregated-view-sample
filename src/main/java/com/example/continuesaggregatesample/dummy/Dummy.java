@@ -7,6 +7,8 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 
 @Entity
 @Table(name = "dummy")
@@ -15,10 +17,10 @@ import lombok.NoArgsConstructor;
 public class Dummy {
 
     @Id
-    private Long timestamp;
+    private Timestamp timestamp;
 
     @Column(columnDefinition = "text")
-    private String cid;
+    private String team;
 
     private Integer testone;
 

@@ -1,19 +1,33 @@
 
-DROP MATERIALIZED VIEW IF EXISTS conditions_5min_agg;
-
 -- Location-based aggregation data per 5 mins
-CREATE MATERIALIZED VIEW IF NOT EXISTS conditions_5min_agg
+CREATE MATERIALIZED VIEW aggregated_dummies_5mins
 WITH (timescaledb.continuous) AS
 SELECT
-    time_bucket('5 minutes', time) AS bucket,
+    time_bucket(INTERVAL '5 minutes', time) AS bucket,
+    team,
+    max(testone) AS sum_testone,
+    min(testtwo) AS min_testtwo,
+    avg(testtwo) AS min_testtwo
+FROM dummy
+GROUP BY bucket, team;
+
+
+DROP MATERIALIZED VIEW IF EXISTS conditions_5min_agg;
+
+SELECT create_hypertable(tablename, timecolumn, migrate_data => true);
+
+-- Location-based aggregation data per 5 mins
+CREATE MATERIALIZED VIEW conditions_5min_agg
+WITH (timescaledb.continuous) AS
+SELECT
+    time_bucket(INTERVAL '5 minutes', time) AS bucket,
     device,
-    ARRAY_AGG(DISTINCT location) AS related_locations,
-    max(temperature) AS average_temperature,
-    avg(humidity) AS average_humidity,
+    max(temperature) AS max_temperature,
+    avg(humidity) AS avg_humidity,
     sum(testone) AS sum_testone,
-    min(testtwo) AS sum_testtwo
+    min(testtwo) AS min_testtwo
 FROM conditions
-GROUP BY bucket, device;
+GROUP BY device, bucket;
 
 
 SELECT add_continuous_aggregate_policy('conditions_5min_agg',
@@ -42,3 +56,4 @@ SELECT add_continuous_aggregate_policy('conditions_5min_agg',
 --   FROM conditions
 --   GROUP BY time_bucket('5 minutes'), location, device
 -- );
+
