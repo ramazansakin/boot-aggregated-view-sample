@@ -1,4 +1,4 @@
-package com.example.continuesaggregatesample.test;
+package com.example.continuesaggregatesample.util;
 
 import java.util.Iterator;
 

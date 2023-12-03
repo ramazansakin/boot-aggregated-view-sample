@@ -1,7 +1,7 @@
 package com.example.continuesaggregatesample;
 
 
-import com.example.continuesaggregatesample.test.PeekingIterator;
+import com.example.continuesaggregatesample.util.PeekingIterator;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

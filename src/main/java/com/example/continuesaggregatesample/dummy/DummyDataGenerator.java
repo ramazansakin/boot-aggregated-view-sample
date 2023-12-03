@@ -2,6 +2,7 @@ package com.example.continuesaggregatesample.dummy;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
@@ -15,16 +16,16 @@ public class DummyDataGenerator {
     @Autowired
     private DummyRepository dummyRepository;
 
-    //    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 60000)
     public void generateDummyData() {
         log.info("###### Random Dummy Data Generator is RUNNING! ######");
 
         String[] teams = {"teamX", "teamY", "teamZ"};
         for (String team : teams) {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            int testone = new Random().nextInt(0, 100);
-            long testtwo = new Random().nextInt(10000);
-            double testthree = new Random().nextDouble() * 100;
+            int testone = new Random().nextInt(0, 10);
+            long testtwo = new Random().nextInt(10);
+            double testthree = new Random().nextDouble(10);
 
             Dummy dummy = new Dummy();
             dummy.setTimestamp(timestamp);

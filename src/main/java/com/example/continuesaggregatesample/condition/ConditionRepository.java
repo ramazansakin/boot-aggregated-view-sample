@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public interface ConditionRepository extends JpaRepository<Conditions, Timestamp> {
 
@@ -20,5 +21,14 @@ public interface ConditionRepository extends JpaRepository<Conditions, Timestamp
             @Param("endDate") Timestamp endDate,
             Pageable pageable
     );
+
+    @Query(value = """
+            SELECT c.bucket AS bucket, c.device AS device, c.related_locations AS relatedLocations,
+                c.average_temperature AS averageTemperature, c.average_humidity AS averageHumidity,
+                c.sum_testone AS sumTestOne, c.sum_testtwo AS sumTestTwo
+            FROM conditions_5min_agg c
+            WHERE c.bucket = :bucket AND c.device = :device
+            """, nativeQuery = true)
+    List<AggregatedConditions> findByBucketAndDevice(@Param("bucket") Long bucket, @Param("device") String device);
 
 }

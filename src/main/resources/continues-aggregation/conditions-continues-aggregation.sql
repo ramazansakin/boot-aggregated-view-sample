@@ -1,5 +1,11 @@
 
--- Location-based aggregation data per 5 mins
+-- convert dummy table to hypertable
+SELECT create_hypertable('dummy', 'timestamp', migrate_data => true);
+
+-- Select all hypertables to see if it s created properly or not
+SELECT * FROM timescaledb_information.hypertables;
+
+-- Team-based aggregation data per 5 mins
 CREATE MATERIALIZED VIEW aggregated_dummies_5mins
 WITH (timescaledb.continuous) AS
 SELECT
