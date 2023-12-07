@@ -1,13 +1,12 @@
 package com.example.continuesaggregatesample.dummy;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.annotation.Nonnull;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 
 
 @Entity
@@ -17,7 +16,11 @@ import java.sql.Timestamp;
 public class Dummy {
 
     @Id
-    private Timestamp timestamp;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(nullable = false, updatable = false)
+    private Instant time;
 
     @Column(columnDefinition = "text")
     private String team;
