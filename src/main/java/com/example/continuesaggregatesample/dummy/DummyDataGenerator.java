@@ -1,34 +1,38 @@
 package com.example.continuesaggregatesample.dummy;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.List;
 import java.util.Random;
 
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class DummyDataGenerator {
 
-    @Autowired
-    private DummyRepository dummyRepository;
+    private final DummyRepository dummyRepository;
+    private final RelatedDummyRepository relatedDummyRepository;
+
 
     @Scheduled(fixedRate = 60000)
     public void generateDummyData() {
-        log.info("###### Random Dummy Data Generator is RUNNING! ######");
+        log.info("###### Dummy Data Generator Job is RUNNING! ######");
 
         String[] teams = {"teamX", "teamY", "teamZ"};
         for (String team : teams) {
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+            Instant timestamp = Instant.now();
             int testone = new Random().nextInt(0, 10);
             long testtwo = new Random().nextInt(10);
             double testthree = new Random().nextDouble(10);
 
             Dummy dummy = new Dummy();
-            dummy.setTimestamp(timestamp);
+            dummy.setTime(timestamp);
             dummy.setTeam(team);
             dummy.setTestone(testone);
             dummy.setTesttwo(testtwo);
@@ -36,6 +40,29 @@ public class DummyDataGenerator {
 
             dummyRepository.save(dummy);
         }
+    }
+
+    // Runs every 1 mins with 10 secs delay to wait for new dummies to relate
+    @Scheduled(initialDelay = 10000, fixedRate = 60000)
+    public void generateRelatedDummyData() {
+        log.info("###### Related Dummy Data Generator Job is RUNNING! ######");
+
+        List<Dummy> lastThreeRows = dummyRepository.findLastThreeRows();
+
+        lastThreeRows.forEach(dummy -> {
+            Instant timestamp = Instant.now();
+            int othertestone = new Random().nextInt(10, 50);
+            int othertesttwo = new Random().nextInt(20);
+
+            RelatedDummy relatedDummy = new RelatedDummy();
+            relatedDummy.setTime(timestamp);
+            relatedDummy.setDummy(dummy);
+            relatedDummy.setOthertestone(othertestone);
+            relatedDummy.setOthertesttwo(othertesttwo);
+
+            relatedDummyRepository.save(relatedDummy);
+        });
+
     }
 
 }
