@@ -26,7 +26,7 @@ public class DummyDataGenerator {
         String[] teams = {"teamX", "teamY", "teamZ"};
         for (String team : teams) {
 
-            Long timestamp = Instant.now().getEpochSecond();
+            Instant timestamp = Instant.now();
             int testone = new Random().nextInt(0, 10);
             long testtwo = new Random().nextInt(10);
             double testthree = new Random().nextDouble(10);
@@ -52,7 +52,7 @@ public class DummyDataGenerator {
 //        List<Dummy> lastThreeRows = dummyRepository.findLastThreeRows();
 
         List.of("teamX", "teamY", "teamZ").forEach(team -> {
-            Long timestamp = Instant.now().getEpochSecond();
+            Instant timestamp = Instant.now();
             int othertestone = new Random().nextInt(10, 50);
             int othertesttwo = new Random().nextInt(20);
 
