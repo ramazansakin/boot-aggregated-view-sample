@@ -26,7 +26,7 @@ public class DummyDataGenerator {
         String[] teams = {"teamX", "teamY", "teamZ"};
         for (String team : teams) {
 
-            Instant timestamp = Instant.now();
+            Long timestamp = Instant.now().getEpochSecond();
             int testone = new Random().nextInt(0, 10);
             long testtwo = new Random().nextInt(10);
             double testthree = new Random().nextDouble(10);
@@ -44,7 +44,7 @@ public class DummyDataGenerator {
 
 
     // @Deprecated Runs every 1 mins with 10 secs delay to wait for new dummies to relate
-    // Generating same team related values to be able join with dummies at the same time
+    // Generating same team related values to be able to join with dummies at the same time
     @Scheduled(fixedRate = 60000)
     public void generateRelatedDummyData() {
         log.info("###### Related Dummy Data Generator Job is RUNNING! ######");
@@ -52,7 +52,7 @@ public class DummyDataGenerator {
 //        List<Dummy> lastThreeRows = dummyRepository.findLastThreeRows();
 
         List.of("teamX", "teamY", "teamZ").forEach(team -> {
-            Instant timestamp = Instant.now();
+            Long timestamp = Instant.now().getEpochSecond();
             int othertestone = new Random().nextInt(10, 50);
             int othertesttwo = new Random().nextInt(20);
 

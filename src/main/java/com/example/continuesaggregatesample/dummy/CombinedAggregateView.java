@@ -1,15 +1,23 @@
 package com.example.continuesaggregatesample.dummy;
 
-import java.sql.Timestamp;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class CombinedAggregateView {
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.Instant;
 
-    private Timestamp timestamp;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class CombinedAggregateView implements Serializable {
+
+    private Instant bucket;
     private String team;
     private Integer totalTestOne;
-    private Double avgTestTwo;
-    private Integer totalOtherTestOne;
-    private Double avgOtherTestTwo;
-    // ... additional fields or calculations as needed
+    private Long minTestTwo;
+    private Long totalOtherTestOne;
+    private BigDecimal avgOtherTestTwo;
 
 }
