@@ -10,7 +10,6 @@ import java.time.Instant;
 @Entity
 @Table(name = "dummy")
 @Data
-@NoArgsConstructor
 @IdClass(GeneralId.class)
 public class Dummy {
 

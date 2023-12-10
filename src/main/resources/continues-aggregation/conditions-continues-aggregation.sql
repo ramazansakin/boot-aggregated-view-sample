@@ -1,16 +1,17 @@
 -- Select
 SELECT * FROM public.dummy;
-
 SELECT * FROM public.related_dummy;
 
 SELECT * FROM public.aggregated_dummies_5mins order by bucket;
-
 SELECT * FROM public.related_dummy_aggregate_5min order by bucket;
+SELECT * FROM public.aggregated_dummies_20mins order by s_bucket;
+SELECT * FROM public.aggregated_dummies_hourly order by h_bucket;
 
 
 DROP MATERIALIZED VIEW aggregated_dummies_5mins CASCADE;
-
 DROP MATERIALIZED VIEW related_dummy_aggregate_5min CASCADE;
+DROP MATERIALIZED VIEW aggregated_dummies_20mins CASCADE;
+DROP MATERIALIZED VIEW aggregated_dummies_hourly CASCADE;
 
 
 SELECT version();
