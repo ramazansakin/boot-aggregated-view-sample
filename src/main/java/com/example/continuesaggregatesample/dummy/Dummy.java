@@ -2,7 +2,6 @@ package com.example.continuesaggregatesample.dummy;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 

@@ -14,7 +14,7 @@ public class AggregatedConditionsService {
     private final ConditionRepository conditionRepository;
 
     public Page<AggregatedConditions> getAggregatedConditions(String device, Timestamp startDate, Timestamp endDate) {
-        return conditionRepository.findByBucketAndDevice(device, startDate, endDate, Pageable.ofSize(5));
+        return conditionRepository.findByBucketAndDevice(device, startDate, endDate, null);
     }
 
 }

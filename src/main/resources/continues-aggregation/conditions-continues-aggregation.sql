@@ -17,6 +17,8 @@ DROP MATERIALIZED VIEW aggregated_dummies_hourly CASCADE;
 SELECT version();
 SELECT * FROM pg_extension WHERE extname = 'timescaledb';
 
+SELECT * FROM timescaledb_information.hypertables;
+
 SELECT * FROM timescaledb_information.continuous_aggregates;
 
 SELECT * FROM timescaledb_experimental.policies;
