@@ -1,8 +1,6 @@
 package com.example.continuesaggregatesample.resource;
 
-import com.example.continuesaggregatesample.dummy.AggregatedCombineDummiesProjection;
 import com.example.continuesaggregatesample.dummy.DummyRepository;
-import com.example.continuesaggregatesample.dummy.HourlyDummyAggregationProjection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,37 +22,25 @@ public class DummyController {
     private final DummyRepository dummyRepository;
 
     @GetMapping
-    public ResponseEntity<List<AggregatedCombineDummiesProjection>> getAggregatedDummies(
+    public ResponseEntity<Page<?>> getAggregatedDummies(
             @RequestParam String team,
             @RequestParam String start,
-            @RequestParam String end) {
+            @RequestParam String end,
+            @RequestParam(defaultValue = "5min") String type,
+            @RequestParam(defaultValue = "1") String page,
+            @RequestParam(defaultValue = "10") String count,
+            @RequestParam(defaultValue = "bucket") String sortBy,
+            @RequestParam(defaultValue = "DESC") String sortType) {
 
         Instant startTime = Instant.parse(start);
         Instant endTime = Instant.parse(end);
-        return ResponseEntity.ok(dummyRepository.findCombinedAggregateView(team, startTime, endTime));
-    }
-
-    @GetMapping("paging")
-    public ResponseEntity<Page<AggregatedCombineDummiesProjection>> getAggregatedDummiesPage(
-            @RequestParam String team,
-            @RequestParam String start,
-            @RequestParam String end) {
-
-        Instant startTime = Instant.parse(start);
-        Instant endTime = Instant.parse(end);
-        Pageable page = PageRequest.of(0, 5 , Sort.by("team").descending());
-        return ResponseEntity.ok(dummyRepository.findCombinedAggregateViewPage(team, startTime, endTime, page));
-    }
-
-    @GetMapping("hourly")
-    public ResponseEntity<List<HourlyDummyAggregationProjection>> getAggregatedDummiesHourly(
-            @RequestParam String team,
-            @RequestParam String start,
-            @RequestParam String end) {
-
-        Instant startTime = Instant.parse(start);
-        Instant endTime = Instant.parse(end);
-        return ResponseEntity.ok(dummyRepository.findCombinedAggregateViewHourly(team, startTime, endTime));
+        Pageable paging = PageRequest.of(
+                Integer.parseInt(page) - 1, Integer.parseInt(count),
+                sortType.equals("DESC") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending());
+        if (type.equals("hourly"))
+            return ResponseEntity.ok(dummyRepository.findCombinedAggregateViewHourly(team, startTime, endTime, paging));
+        else
+            return ResponseEntity.ok(dummyRepository.findCombinedAggregateView(team, startTime, endTime, paging));
     }
 
 }
