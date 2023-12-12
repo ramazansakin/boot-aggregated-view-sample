@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface RelatedDummyRepository extends JpaRepository<RelatedDummy, Integer> {
+public interface RelatedDummyRepository extends JpaRepository<RelatedDummy, Long> {
 }

@@ -19,7 +19,8 @@ public class DummyDataGenerator {
     private final RelatedDummyRepository relatedDummyRepository;
 
 
-    @Scheduled(fixedRate = 60000)
+    // TODO - Dummy Data Generator disabled
+//    @Scheduled(fixedRate = 60000)
     public void generateDummyData() {
         log.info("###### Dummy Data Generator Job is RUNNING! ######");
 
@@ -45,7 +46,7 @@ public class DummyDataGenerator {
 
     // @Deprecated Runs every 1 mins with 10 secs delay to wait for new dummies to relate
     // Generating same team related values to be able to join with dummies at the same time
-    @Scheduled(fixedRate = 60000)
+//    @Scheduled(fixedRate = 60000)
     public void generateRelatedDummyData() {
         log.info("###### Related Dummy Data Generator Job is RUNNING! ######");
 

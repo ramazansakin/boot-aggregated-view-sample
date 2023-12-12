@@ -24,6 +24,7 @@ public class RandomConditionGenerator {
 
     private static AtomicLong idSequence = new AtomicLong(0);
 
+    // TODO - Dummy Data Generator disabled
 //    @Scheduled(fixedRate = 60000) // Run every minute
     public void generateDummyData() {
 

@@ -11,7 +11,7 @@ import java.time.Instant;
 import java.util.List;
 
 @Repository
-public interface DummyRepository extends JpaRepository<Dummy, Integer> {
+public interface DummyRepository extends JpaRepository<Dummy, Long> {
 
     @Query(value = "SELECT * FROM Dummy d ORDER BY d.time DESC LIMIT 3", nativeQuery = true)
     List<Dummy> findLastThreeRows();
