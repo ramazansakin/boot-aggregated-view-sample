@@ -29,4 +29,6 @@ public class Dummy {
 
     private Double testthree;
 
+    private String stragg;
+
 }

@@ -46,13 +46,26 @@ FROM dummy
 GROUP BY bucket, team
     WITH NO DATA;
 
+-- Trail 3 Dummy Continues Aggregation View
+CREATE MATERIALIZED VIEW aggregated_dummies_5mins
+WITH (timescaledb.continuous) AS
+SELECT
+    time_bucket(INTERVAL '5 minutes', time) AS bucket,
+    team,
+    max(testone) AS sum_testone,
+    min(testtwo) AS min_testtwo,
+    avg(testthree) AS avg_testthree,
+    arr_agg(stragg) AS agg_stragg
+FROM dummy
+GROUP BY bucket, team
+    WITH NO DATA;
+
 -- I m thinking about the set data retention period as 3 months
 SELECT add_continuous_aggregate_policy(
                'aggregated_dummies_5mins',
                start_offset => INTERVAL '30 mins',
                end_offset => INTERVAL '10 mins',
                schedule_interval => INTERVAL '4 months');
-
 
 
 CREATE MATERIALIZED VIEW related_dummy_aggregate_5min

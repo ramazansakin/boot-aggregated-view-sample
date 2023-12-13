@@ -20,11 +20,12 @@ public class DummyDataGenerator {
 
 
     // TODO - Dummy Data Generator disabled
-//    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 60000)
     public void generateDummyData() {
         log.info("###### Dummy Data Generator Job is RUNNING! ######");
 
         String[] teams = {"teamX", "teamY", "teamZ"};
+
         for (String team : teams) {
 
             Instant timestamp = Instant.now();
@@ -38,9 +39,24 @@ public class DummyDataGenerator {
             dummy.setTestone(testone);
             dummy.setTesttwo(testtwo);
             dummy.setTestthree(testthree);
+            dummy.setStragg(generateRandomString(2));
 
             dummyRepository.save(dummy);
         }
+    }
+
+    private static String generateRandomString(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        StringBuilder randomStringBuilder = new StringBuilder();
+
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(characters.length());
+            char randomChar = characters.charAt(randomIndex);
+            randomStringBuilder.append(randomChar);
+        }
+
+        return randomStringBuilder.toString();
     }
 
 

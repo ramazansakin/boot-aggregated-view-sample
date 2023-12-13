@@ -22,7 +22,8 @@ public class TimeLongTestDataGenerator {
         String[] groups = {"groupA", "groupB", "groupC", "groupD"};
         for (String group : groups) {
 
-            Long timestamp = Instant.now().getEpochSecond();
+            // Set milliseconds format Epoch-time
+            Long timestamp = Instant.now().getEpochSecond() * 1000;
             int test = new Random().nextInt(10);
 
             TimeLongTest timeLongTest = new TimeLongTest();
