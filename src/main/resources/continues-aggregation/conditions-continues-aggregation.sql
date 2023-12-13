@@ -65,7 +65,7 @@ SELECT add_continuous_aggregate_policy(
                'aggregated_dummies_5mins',
                start_offset => INTERVAL '30 mins',
                end_offset => INTERVAL '10 mins',
-               schedule_interval => INTERVAL '4 months');
+               schedule_interval => INTERVAL '5 mins');
 
 
 CREATE MATERIALIZED VIEW related_dummy_aggregate_5min
@@ -83,7 +83,7 @@ SELECT add_continuous_aggregate_policy(
                'related_dummy_aggregate_5min',
                start_offset => INTERVAL '30 mins',
                end_offset => INTERVAL '10 mins',
-               schedule_interval => INTERVAL '4 months');
+               schedule_interval => INTERVAL '5mins');
 
 
 CREATE MATERIALIZED VIEW aggregated_dummies_20mins
@@ -103,7 +103,7 @@ SELECT add_continuous_aggregate_policy(
                'aggregated_dummies_20mins',
                start_offset => INTERVAL '1 month',
                end_offset => INTERVAL '10 mins',
-               schedule_interval => INTERVAL '4 months');
+               schedule_interval => INTERVAL '20 mins');
 
 
 CREATE MATERIALIZED VIEW aggregated_dummies_hourly
@@ -123,7 +123,7 @@ SELECT add_continuous_aggregate_policy(
                'aggregated_dummies_hourly',
                start_offset => INTERVAL '1 month',
                end_offset => INTERVAL '10 mins',
-               schedule_interval => INTERVAL '4 months');
+               schedule_interval => INTERVAL '1 hour');
 
 
 -- just Device-based aggregation data per 1 hour
