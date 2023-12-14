@@ -21,4 +21,8 @@ public class TimeLongTest {
 
     private Integer test;
 
+    private String sample;
+
+    private Long lastseentime;
+
 }

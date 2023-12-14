@@ -16,7 +16,7 @@ public class TimeLongTestDataGenerator {
     private final TimeLongTestRepository timeLongTestRepository;
 
     @Scheduled(fixedRate = 60000)
-    public void generateDummyData() {
+    public void generateTimeLongTestData() {
         log.info("###### TimeLongTest Data Generator Job is RUNNING! ######");
 
         String[] groups = {"groupA", "groupB", "groupC", "groupD"};
@@ -30,9 +30,25 @@ public class TimeLongTestDataGenerator {
             timeLongTest.setTime(timestamp);
             timeLongTest.setGroupName(group);
             timeLongTest.setTest(test);
+            timeLongTest.setSample(generateRandomString(3));
+            timeLongTest.setLastseentime(Instant.now().getEpochSecond());
 
             timeLongTestRepository.save(timeLongTest);
         }
+    }
+
+    private static String generateRandomString(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        StringBuilder randomStringBuilder = new StringBuilder();
+
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(characters.length());
+            char randomChar = characters.charAt(randomIndex);
+            randomStringBuilder.append(randomChar);
+        }
+
+        return randomStringBuilder.toString();
     }
 
 }

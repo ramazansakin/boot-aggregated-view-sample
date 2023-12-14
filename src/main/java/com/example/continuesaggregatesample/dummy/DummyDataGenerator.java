@@ -20,7 +20,7 @@ public class DummyDataGenerator {
 
 
     // TODO - Dummy Data Generator disabled
-    @Scheduled(fixedRate = 60000)
+//    @Scheduled(fixedRate = 60000)
     public void generateDummyData() {
         log.info("###### Dummy Data Generator Job is RUNNING! ######");
 
@@ -60,7 +60,7 @@ public class DummyDataGenerator {
     }
 
 
-    // @Deprecated Runs every 1 mins with 10 secs delay to wait for new dummies to relate
+    // @Deprecated Runs every 1 min with 10 secs delay to wait for new dummies to relate
     // Generating same team related values to be able to join with dummies at the same time
 //    @Scheduled(fixedRate = 60000)
     public void generateRelatedDummyData() {
