@@ -17,6 +17,7 @@ CREATE FUNCTION current_epoch_milli() RETURNS BIGINT
 
 SELECT set_integer_now_func('time_long_test', 'current_epoch_milli');
 
+-- ## 5 mins aggregation buckets
 CREATE MATERIALIZED VIEW aggregated_long_time_5mins
 WITH (timescaledb.continuous) AS
 SELECT
@@ -33,3 +34,43 @@ SELECT add_continuous_aggregate_policy('aggregated_long_time_5mins',
                                        start_offset => 3600000,
                                        end_offset => 300000,
                                        schedule_interval => INTERVAL '5 mins');
+
+
+
+-- ## 1 hour aggregation buckets
+CREATE MATERIALIZED VIEW aggregated_long_time_hourly
+WITH (timescaledb.continuous) AS
+SELECT
+    time_bucket('3600000', bucket) AS bucket_h,
+    group_name,
+    avg(test) AS test,
+    string_agg(sample::text, ',') AS sample,
+    string_agg(lastseentime::text, ',') AS lastseentime
+FROM aggregated_long_time_5mins
+GROUP BY group_name, bucket_h
+    WITH NO DATA;
+
+SELECT add_continuous_aggregate_policy('aggregated_long_time_hourly',
+                                       start_offset => 3600000000,
+                                       end_offset => 3600000,
+                                       schedule_interval => INTERVAL '1 hour');
+
+
+-- ## 1 day aggregation buckets
+CREATE MATERIALIZED VIEW aggregated_long_time_daily
+WITH (timescaledb.continuous) AS
+SELECT
+    time_bucket('86400000', bucket) AS bucket_d,
+    group_name,
+    avg(test) AS test,
+    string_agg(sample::text, ',') AS sample,
+    string_agg(lastseentime::text, ',') AS lastseentime
+FROM aggregated_long_time_5mins
+GROUP BY group_name, bucket_d
+    WITH NO DATA;
+
+SELECT add_continuous_aggregate_policy('aggregated_long_time_daily',
+                                       start_offset => 3600000000,
+                                       end_offset => 3600000,
+                                       schedule_interval => INTERVAL '1 hour');
+
