@@ -13,8 +13,10 @@ public class AggregatedConditionsService {
 
     private final ConditionRepository conditionRepository;
 
-    public Page<AggregatedConditions> getAggregatedConditions(String device, Timestamp startDate, Timestamp endDate) {
-        return conditionRepository.findByBucketAndDevice(device, startDate, endDate, null);
+    public Page<AggregatedConditions> getAggregatedConditions(
+            String device, Timestamp startDate, Timestamp endDate, int page, int count) {
+
+        return conditionRepository.findByBucketAndDevice(device, startDate, endDate, Pageable.ofSize(count).withPage(page));
     }
 
 }
